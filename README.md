@@ -15,7 +15,7 @@ The IOT project will:
 ### Appropriate Cables to make the required conections.
 ![Alt text](PICTURES/GPIOCABLES.png)
 ### ADC0832 Module: An analog-to-digital converter to capture data from analog sensors.
-![Alt text](PICTURES/PI.png)
+![Alt text](PICTURES/ADC0832.png)
 ### Light Sensor: Detects ambient light levels and sends data through the ADC0832.
 ![Alt text](PICTURES/PHOTORESISTOR.png)
 ### Temperature Sensor: Captures temperature, publishing updates through the Pi.
