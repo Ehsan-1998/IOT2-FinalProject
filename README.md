@@ -23,4 +23,4 @@ The IOT project will:
 ### LED: Indicates when temperature exceeds 25°C or another set threshold.
 ![Alt text](PICTURES/LEDS.png)
 ### AWS IoT Core: Cloud platform to monitor sensor data, set up rules, and manage data republishing.
-
+![Alt text](PICTURES/AWS.png)
