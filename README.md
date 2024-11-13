@@ -8,6 +8,8 @@ The IOT project will:
 - Trigger alerts and actions based on preset thresholds (e.g., turning on an LED when temperature 
 - exceeds 25°C).
 - Republish data if specific conditions are met (e.g., light level thresholds), enabling further analysis and remote access.
+  ### ![image](PICTURES/PROJECT.png)
+
 
 ## Components
 ### Raspberry Pi: The main microcontroller for managing sensor data and interacting with the AWS IoT.
