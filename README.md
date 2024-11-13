@@ -1,6 +1,9 @@
 # IOT2-FinalProject
 This is the final integration project in IOT2,This project demonstrates an interactive IoT system using a Raspberry Pi to monitor environmental conditions, specifically light and temperature, and respond accordingly with sensor-based actions and real-time data handling, The setup integrates AWS IoT for cloud monitoring.
 
+# Simple mockup of the ThingsBoard
+![image](PICTURES/DASHBOARD.png)
+
 ## Project Overview
 The IOT project will:  
 - Monitor light and temperature levels using connected sensors.
