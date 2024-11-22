@@ -1,67 +1,59 @@
-/*
- * File name   : rgbLed.c
- * Description : control a rgb led 
- * Website     : www.adeept.com
- * E-mail      : support@adeept.com
- * Author      : Jason
- * Date        : 2015/05/26
- */
-#include <wiringPi.h>  
-#include <softPwm.h>  
-#include <stdio.h>  
+import RPi.GPIO as GPIO
+from time import sleep
 
-#define LedPinRed    0  
-#define LedPinGreen  1  
-#define LedPinBlue   2  
+# Define RGB LED pins
+LedPinRed = 13
+LedPinGreen = 19
+LedPinBlue = 26
 
-const int colors[] = {0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00, 0x00FFFF, 0xFF00FF, 0xFFFFFF, 0x9400D3};  
+# Colors (hexadecimal values)
+colors = [
+    0xFF0000,  # Red
+    0x00FF00,  # Green
+    0x0000FF,  # Blue
+    0xFFFF00,  # Yellow
+    0x00FFFF,  # Cyan
+    0xFF00FF,  # Magenta
+    0xFFFFFF,  # White
+    0x9400D3   # Purple
+]
 
-int map(int x, int in_min, int in_max, int out_min, int out_max)     
-{  
-	return (x -in_min) * (out_max - out_min) / (in_max - in_min) + out_min;  
-}  
+# Initialize GPIO pins for PWM
+def led_init():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(LedPinRed, GPIO.OUT)
+    GPIO.setup(LedPinGreen, GPIO.OUT)
+    GPIO.setup(LedPinBlue, GPIO.OUT)
+    global pwm_red, pwm_green, pwm_blue
+    pwm_red = GPIO.PWM(LedPinRed, 100)
+    pwm_green = GPIO.PWM(LedPinGreen, 100)
+    pwm_blue = GPIO.PWM(LedPinBlue, 100)
+    pwm_red.start(0)
+    pwm_green.start(0)
+    pwm_blue.start(0)
 
-void ledInit(void)  
-{  
-	softPwmCreate(LedPinRed,  0, 100);  //create a soft pwm, original duty cycle is 0Hz, range is 0~100   
-	softPwmCreate(LedPinGreen,0, 100);  
-	softPwmCreate(LedPinBlue, 0, 100);  
-}  
+# Map function to convert values
+def map_value(x, in_min, in_max, out_min, out_max):
+    return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
 
-void ledColorSet(int color)        //set color, for example: 0xde3f47  
-{  
-	int r_val, g_val, b_val;  
+# Set RGB LED color
+def led_color_set(color):
+    r_val = map_value((color & 0xFF0000) >> 16, 0, 255, 0, 100)
+    g_val = map_value((color & 0x00FF00) >> 8, 0, 255, 0, 100)
+    b_val = map_value((color & 0x0000FF), 0, 255, 0, 100)
+    pwm_red.ChangeDutyCycle(100 - r_val)
+    pwm_green.ChangeDutyCycle(100 - g_val)
+    pwm_blue.ChangeDutyCycle(100 - b_val)
 
-	r_val = (color & 0xFF0000) >> 16;  //get red value  
-	g_val = (color & 0x00FF00) >> 8;   //get green value  
-	b_val = (color & 0x0000FF) >> 0;   //get blue value  
-
-	r_val = map(r_val, 0, 255, 0, 100);    //change a num(0~255) to 0~100  
-	g_val = map(g_val, 0, 255, 0, 100);  
-	b_val = map(b_val, 0, 255, 0, 100);  
-
-	softPwmWrite(LedPinRed,   100 - r_val);  //change duty cycle  
-	softPwmWrite(LedPinGreen, 100 - g_val);  
-	softPwmWrite(LedPinBlue,  100 - b_val);  
-}  
-
-int main(void)  
-{  
-	int i;  
-
-	if(wiringPiSetup() < 0){ //when initialize wiringPi failed, print message to screen  
-		printf("setup wiringPi failed !\n");  
-		return -1;   
-	}  
-
-	ledInit();  
-
-	while(1){  
-		for(i = 0; i < sizeof(colors)/sizeof(int); i++){  
-			ledColorSet(colors[i]);  
-			delay(500);  
-		}  
-	}  
-
-	return 0;  
-}  
+# Main loop
+try:
+    led_init()
+    while True:
+        for color in colors:
+            led_color_set(color)
+            sleep(0.5)
+except KeyboardInterrupt:
+    pwm_red.stop()
+    pwm_green.stop()
+    pwm_blue.stop()
+    GPIO.cleanup()
