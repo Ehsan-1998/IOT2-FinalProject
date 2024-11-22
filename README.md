@@ -20,7 +20,7 @@ The IOT project will:
 ### Appropriate Cables to make the required conections.
 ![Alt text](PICTURES/GPIOCABLES.png)
 ### HVAC system (fan).
-![Alt text](PICTURES/HVAC.jng)
+![Alt text](PICTURES/HVAC.jpg)
 ### ADC0832 Module: An analog-to-digital converter to capture data from analog sensors.
 ![Alt text](PICTURES/ADC0832.png)
 ### Light Sensor: Detects ambient light levels and sends data through the ADC0832.
