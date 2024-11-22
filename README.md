@@ -19,6 +19,8 @@ The IOT project will:
 ![Alt text](PICTURES/PI.png)
 ### Appropriate Cables to make the required conections.
 ![Alt text](PICTURES/GPIOCABLES.png)
+### A water pump (simulated with a RGB LED), 
+![Alt text](PICTURES/RGB.png)
 ### HVAC system (fan).
 ![Alt text](PICTURES/HVAC.jpg)
 ### ADC0832 Module: An analog-to-digital converter to capture data from analog sensors.
